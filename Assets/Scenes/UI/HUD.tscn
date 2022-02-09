@@ -1,0 +1,222 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Assets/Scripts/UI/HUD.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Fonts/bonard.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Assets/Textures/crosshair.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Textures/4048.Transparent-3.png-680x1000.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Scripts/UI/DamageDisplayHandler.cs" type="Script" id=5]
+[ext_resource path="res://Assets/Scenes/UI/DamagePointer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Scripts/UI/Indicator.cs" type="Script" id=7]
+[ext_resource path="res://Assets/Textures/BarraSalud/progreso_barra.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Textures/BarraSalud/fondo_barra.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Textures/BarraSalud/borde_barra.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Scripts/UI/PlayerLifeBar.cs" type="Script" id=11]
+[ext_resource path="res://Assets/Scenes/UI/GameOver.tscn" type="PackedScene" id=12]
+
+[sub_resource type="DynamicFont" id=13]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 64
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+weapons = NodePath("../Player/Head/Weapons")
+
+[node name="Damaged" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+margin_top = -10.0
+margin_right = 12.0
+margin_bottom = 10.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+gameOverScreen = ExtResource( 12 )
+
+[node name="DamagedTexture" type="TextureRect" parent="Damaged"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Indicator" type="Control" parent="Damaged"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 20, 20 )
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+indicatorPointer = ExtResource( 6 )
+
+[node name="TextureProgress" type="TextureProgress" parent="Damaged"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 62.0
+margin_top = -67.0
+margin_right = 359.0
+margin_bottom = -27.0
+step = 0.5
+value = 100.0
+texture_under = ExtResource( 9 )
+texture_over = ExtResource( 10 )
+texture_progress = ExtResource( 8 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Damaged/TextureProgress"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -72.0
+margin_top = -18.0
+margin_right = -6.0
+margin_bottom = 16.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 13 )
+text = "100"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Damaged/TextureProgress"]
+
+[node name="Crosshair" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 20, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = -3.0
+margin_right = 3.0
+margin_bottom = 2.0
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UI" type="Control" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -160.0
+margin_top = -128.0
+margin_right = -36.0
+margin_bottom = -29.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="UI"]
+margin_left = -3.0
+margin_top = 55.0
+margin_right = 120.0
+margin_bottom = 89.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 10 )
+text = "AK 47"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bullets" type="Label" parent="UI"]
+margin_left = -3.0
+margin_top = -2.0
+margin_right = 47.0
+margin_bottom = 63.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 11 )
+text = "12"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ammo" type="Label" parent="UI"]
+margin_left = 58.0
+margin_top = 23.0
+margin_right = 146.0
+margin_bottom = 56.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 12 )
+text = "999"
+uppercase = true
+
+[node name="Shadow" type="ColorRect" parent="UI"]
+self_modulate = Color( 1, 1, 1, 0.454902 )
+margin_left = 50.0
+margin_top = -8.0
+margin_right = 52.0
+margin_bottom = 53.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line" type="ColorRect" parent="UI/Shadow"]
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 1.0
+margin_bottom = 60.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Scenes/LevelGenerator/Ground_Material.tres" type="Material" id=1]
+
+[node name="Ground" type="CSGBox"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75942, 0 )
+use_collision = true
+collision_layer = 17
+collision_mask = 0
+width = 20.0
+height = 1.5
+depth = 20.0
+material = ExtResource( 1 )

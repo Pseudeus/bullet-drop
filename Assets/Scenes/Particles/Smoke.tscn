@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Textures/smoke_02.png" type="Texture" id=1]
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.146067, 0.511236, 1 )
+colors = PoolColorArray( 0.112152, 0.224363, 0.957031, 1, 0.976562, 0.81116, 0.69046, 1, 0.773438, 0.773438, 0.773438, 0.392157, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=12]
+max_value = 0.2
+_data = [ Vector2( 0, 0.0090909 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0581818 ), 0.144258, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=13]
+curve = SubResource( 12 )
+
+[sub_resource type="Curve" id=10]
+min_value = 1.0
+max_value = 25.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 16.9273 ), 0.933074, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+lifetime_randomness = 0.4
+emission_shape = 2
+emission_box_extents = Vector3( 0.001, 0.001, 1 )
+gravity = Vector3( 0, 0.2, 0 )
+linear_accel = 0.2
+linear_accel_curve = SubResource( 13 )
+angle_random = 0.45
+scale_random = 0.15
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 1
+params_billboard_keep_scale = true
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="QuadMesh" id=2]
+material = SubResource( 7 )
+size = Vector2( 0.02, 0.02 )
+
+[node name="Smoke" type="Spatial"]
+
+[node name="Particles" type="Particles" parent="."]
+amount = 2000
+lifetime = 0.05
+visibility_aabb = AABB( -2, -2, -100, 4, 3, 200 )
+local_coords = false
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 2 )

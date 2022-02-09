@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Stone_Footstep_3.wav-84b8ffdabe0cb543f8432c5f5e3bdbfe.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Footsteps/Stone/Stone_Footstep_3.wav"
+dest_files=[ "res://.import/Stone_Footstep_3.wav-84b8ffdabe0cb543f8432c5f5e3bdbfe.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=1

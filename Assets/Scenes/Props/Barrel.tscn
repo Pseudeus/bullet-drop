@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Models/Barrel/Barrel.tres" type="ArrayMesh" id=1]
+[ext_resource path="res://Assets/Sounds/Barrel/Impact.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Assets/Sounds/Barrel/Explotion.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Scenes/Particles/Explotion.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Scripts/Props/Barrel.cs" type="Script" id=5]
+
+[sub_resource type="CylinderShape" id=3]
+radius = 0.452852
+height = 1.46291
+
+[sub_resource type="SphereShape" id=2]
+radius = 6.0
+
+[node name="Barrel" type="RigidBody"]
+mass = 6.12245
+script = ExtResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 3 )
+
+[node name="DestroyTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="Explotion" parent="." instance=ExtResource( 4 )]
+
+[node name="Sound" type="Spatial" parent="."]
+
+[node name="Explotion" type="AudioStreamPlayer3D" parent="Sound"]
+stream = ExtResource( 3 )
+unit_db = 80.0
+
+[node name="Impact" type="AudioStreamPlayer3D" parent="Sound"]
+stream = ExtResource( 2 )
+unit_db = 80.0
+
+[node name="ExplotionRange" type="Area" parent="."]
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="ExplotionRange"]
+shape = SubResource( 2 )

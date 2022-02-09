@@ -1,0 +1,113 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Assets/Shaders/sniper_reticle.gdshader" type="Shader" id=1]
+[ext_resource path="res://Assets/Shaders/Sniper.gdshader" type="Shader" id=2]
+[ext_resource path="res://Assets/Models/L96-Sniper/L96_Sniper.glb" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Textures/reticle_04.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Textures/filledCircle.png" type="Texture" id=5]
+
+[sub_resource type="QuadMesh" id=1]
+size = Vector2( 0.025, 0.025 )
+
+[sub_resource type="ViewportTexture" id=18]
+viewport_path = NodePath("Scope")
+
+[sub_resource type="ShaderMaterial" id=17]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+shader_param/AlbedoTexture = SubResource( 18 )
+shader_param/AlphaTexture = ExtResource( 5 )
+
+[sub_resource type="VisualShaderNodeTexture" id=13]
+texture = ExtResource( 5 )
+
+[sub_resource type="VisualShader" id=14]
+code = "shader_type spatial;
+render_mode specular_schlick_ggx;
+
+uniform sampler2D tex_frg_2;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Texture:2
+	vec4 tex_frg_2_read = texture(tex_frg_2, UV.xy);
+	vec3 n_out2p0 = tex_frg_2_read.rgb;
+	float n_out2p1 = tex_frg_2_read.a;
+
+// Output:0
+	ALPHA = n_out2p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -265, 48.5 )
+nodes/fragment/2/node = SubResource( 13 )
+nodes/fragment/2/position = Vector2( 65, 246.5 )
+nodes/fragment/connections = PoolIntArray( 2, 1, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=15]
+shader = SubResource( 14 )
+
+[sub_resource type="SpatialMaterial" id=4]
+metallic = 0.71
+roughness = 0.29
+
+[sub_resource type="ShaderMaterial" id=20]
+shader = ExtResource( 1 )
+shader_param/Reticle = ExtResource( 4 )
+
+[sub_resource type="QuadMesh" id=8]
+material = SubResource( 20 )
+size = Vector2( 0.024, 0.024 )
+
+[node name="L96_Sniper" instance=ExtResource( 3 )]
+
+[node name="Scope" type="Viewport" parent="." index="0"]
+size = Vector2( 512, 512 )
+msaa = 2
+keep_3d_linear = true
+render_target_v_flip = true
+gui_disable_input = true
+
+[node name="Camera" type="Camera" parent="Scope" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0.000872665, 0, -0.000872665, 1, 0, 0.0801307, -0.304212 )
+current = true
+fov = 5.0
+near = 0.1
+far = 1000.0
+
+[node name="L96_Sniper_Rifle" parent="." index="1"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.0211705, -0.0793878 )
+
+[node name="L96_Sniper_Rifle_Scope_Lens" parent="." index="2"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.021, -0.077 )
+
+[node name="Back_Scope" type="MeshInstance" parent="." index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0782051, -0.0421893 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 17 )
+
+[node name="Front_Scope" type="MeshInstance" parent="." index="4"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.0791242, -0.239274 )
+material_override = SubResource( 15 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 4 )
+
+[node name="RemoteTransform" type="RemoteTransform" parent="." index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0.000872665, 0, -0.000872665, 1, 0, 0.0801307, -0.304212 )
+remote_path = NodePath("../Scope/Camera")
+
+[node name="Reticle" type="MeshInstance" parent="." index="6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0782652, -0.0418547 )
+mesh = SubResource( 8 )
+material/0 = null

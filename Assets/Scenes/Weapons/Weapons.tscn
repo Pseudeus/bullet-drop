@@ -1,0 +1,117 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Assets/Scripts/Weapons/WeaponRecoil.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Scripts/Weapons/Weapon.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Scripts/Weapons/WeaponSelect.cs" type="Script" id=3]
+[ext_resource path="res://Assets/Sounds/AR10-7.62x51-308-Close-Single-Gunshot-B-www.fesliyanstudios.com.mp3" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Scenes/Weapons/L96_Sniper.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Scenes/Weapons/Gun_Template.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Scenes/Particles/HitParticles.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Scenes/Particles/MuzzleFlash.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Sounds/Barrett-M82-.50-BMG-Single-Close-Gunshot-A-www.fesliyanstudios.com.mp3" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Models/ak-47/ak-47.tres" type="ArrayMesh" id=10]
+[ext_resource path="res://Assets/Models/Shotgun/Shotgun.tres" type="ArrayMesh" id=11]
+[ext_resource path="res://Assets/Scripts/Weapons/Ammo.cs" type="Script" id=12]
+[ext_resource path="res://Assets/Sounds/12-Gauge-Pump-Action-Shotgun-Close-Gunshot-C-www.fesliyanstudios.com.mp3" type="AudioStream" id=13]
+
+[node name="Weapons" type="Position3D"]
+script = ExtResource( 3 )
+
+[node name="AK-47" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.003, 0 )
+weaponName = "AK 47"
+Damage = 4
+Acuracy = 0.75
+
+[node name="PivotPoint" parent="AK-47" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.033, 0.065 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AK-47/PivotPoint" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0117345, -0.109125 )
+mesh = ExtResource( 10 )
+material/0 = null
+
+[node name="Cadence" parent="AK-47" index="1"]
+wait_time = 0.15
+
+[node name="AudioStreamPlayer3D" parent="AK-47" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00995851, -0.616818 )
+stream = ExtResource( 4 )
+
+[node name="MuzzleFlash" parent="AK-47" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00995851, -0.616818 )
+
+[node name="Position_Sniper" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0279068, 0.0567898 )
+visible = false
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "recoil position point"
+}
+weaponName = "LP96"
+ammoType = 2
+aimType = 1
+WeaponSlotCapacity = 12
+Damage = 14
+Acuracy = 0.85
+hitEffect = ExtResource( 7 )
+
+[node name="L96_Sniper" parent="Position_Sniper" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0283971, 0.0640212 )
+script = ExtResource( 1 )
+rotationalRecoilSpeed = 48.0
+rotationalReturnSpeed = 24.0
+recoilRotation = Vector3( 20, 5, 7 )
+recoilKickBack = Vector3( 0.02, 0, -0.2 )
+recoilRotationAim = Vector3( 10, 4, 3 )
+recoilKickBackAim = Vector3( 0.015, 0, -0.05 )
+
+[node name="Cadence" type="Timer" parent="Position_Sniper"]
+one_shot = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Position_Sniper"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00658728, -0.856685 )
+stream = ExtResource( 9 )
+unit_db = 3.967
+emission_angle_degrees = 75.0
+
+[node name="MuzzleFlash" parent="Position_Sniper" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00716701, -0.872953 )
+
+[node name="Shotgun" parent="." instance=ExtResource( 6 )]
+visible = false
+weaponName = "870 SHOT"
+ammoType = 1
+WeaponSlotCapacity = 7
+Range = 50.0
+Damage = 5
+Acuracy = 0.0
+
+[node name="PivotPoint" parent="Shotgun" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0481371, 0.0350228 )
+rotationalRecoilSpeed = 64.0
+recoilRotation = Vector3( 100, 5, 7 )
+recoilKickBack = Vector3( 0.015, 0, -0.6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Shotgun/PivotPoint" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.022, -0.082 )
+mesh = ExtResource( 11 )
+material/0 = null
+
+[node name="Cadence" parent="Shotgun" index="1"]
+wait_time = 0.5
+
+[node name="AudioStreamPlayer3D" parent="Shotgun" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0261613, -0.706731 )
+stream = ExtResource( 13 )
+unit_db = 5.0
+
+[node name="MuzzleFlash" parent="Shotgun" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0261613, -0.706731 )
+
+[node name="Ammo" type="Node" parent="."]
+script = ExtResource( 12 )
+
+[editable path="AK-47"]
+[editable path="Shotgun"]

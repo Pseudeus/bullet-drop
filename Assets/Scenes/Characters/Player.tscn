@@ -1,0 +1,64 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Assets/Scripts/Weapons/Camera/WeaponZoom.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Scripts/Weapons/Camera/CameraRecoil.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Scripts/FirstPersonController/Motion.cs" type="Script" id=3]
+[ext_resource path="res://Assets/Scripts/FirstPersonController/FirstPersonController.cs" type="Script" id=4]
+[ext_resource path="res://Assets/Scenes/Weapons/Weapons.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Scenes/Utilities/Stats.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Sounds/Footsteps/Stone/Stone_Footstep_1.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sounds/Footsteps/Stone/Stone_Footstep_5.wav" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Sounds/Footsteps/Stone/Stone_Footstep_2.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Sounds/Footsteps/Stone/Stone_Footstep_4.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/Footsteps/Stone/Stone_Footstep_3.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/Footsteps/Stone/Stone_Footstep_6.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/Footsteps/Stone/Stone_Footstep_7.wav" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Scenes/UI/PauseMenu.tscn" type="PackedScene" id=14]
+
+[sub_resource type="CapsuleShape" id=3]
+radius = 0.297505
+height = 1.2
+
+[node name="Player" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00234383, 0 )
+collision_layer = 2
+collision_mask = 5
+script = ExtResource( 4 )
+runStepLenghten = 0.47
+footstepSound = [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 12 ), ExtResource( 13 ) ]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.895562, 0 )
+shape = SubResource( 3 )
+
+[node name="Head" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.47427, 0 )
+script = ExtResource( 3 )
+
+[node name="Camera" type="Camera" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.228 )
+current = true
+fov = 60.0
+near = 0.02
+script = ExtResource( 2 )
+
+[node name="Zoom" type="Node" parent="Head/Camera"]
+script = ExtResource( 1 )
+zoomInSensibility = 0.1
+
+[node name="Listener" type="Listener" parent="Head/Camera"]
+current = true
+
+[node name="Weapons" parent="Head" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0656567, -0.0939915, -0.373913 )
+
+[node name="Aim" type="Position3D" parent="Head/Weapons"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0499012, -0.303256 )
+
+[node name="Stats" parent="." instance=ExtResource( 6 )]
+HealthPoints = 150
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+unit_db = 80.0
+
+[node name="PauseMenu" parent="." instance=ExtResource( 14 )]

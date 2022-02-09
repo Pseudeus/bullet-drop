@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Impact.ogg-e4982f341bbd85afb98d65558b96dc7f.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/Barrel/Impact.ogg"
+dest_files=[ "res://.import/Impact.ogg-e4982f341bbd85afb98d65558b96dc7f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

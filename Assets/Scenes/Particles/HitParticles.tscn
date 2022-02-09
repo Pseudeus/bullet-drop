@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Assets/Scripts/Particles/HitParticles.cs" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.516854, 1 )
+colors = PoolColorArray( 0.984375, 0.0269165, 0.0269165, 1, 0.725948, 0.347197, 0.0130046, 1, 0.484375, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.0149254, 0.181818 ), 0.0, 0.379693, 0, 0, Vector2( 1, 1 ), 1.005, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+lifetime_randomness = 0.75
+direction = Vector3( 0, 1, 0 )
+spread = 30.0
+initial_velocity = 3.0
+initial_velocity_random = 0.8
+angular_velocity_random = 0.5
+linear_accel_random = 0.3
+radial_accel_random = 0.3
+tangential_accel_random = 0.33
+angle_random = 0.2
+scale_random = 1.0
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_unshaded = true
+params_billboard_mode = 1
+params_billboard_keep_scale = true
+albedo_color = Color( 0.580392, 0.0470588, 0.121569, 1 )
+
+[sub_resource type="QuadMesh" id=7]
+material = SubResource( 6 )
+size = Vector2( 0.1, 0.1 )
+
+[node name="Particles" type="Particles"]
+emitting = false
+amount = 50
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB( -1.14439, -1.32418, -0.9, 2.28878, 2.64835, 1.8 )
+local_coords = false
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 7 )
+script = ExtResource( 1 )
